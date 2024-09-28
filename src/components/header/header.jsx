@@ -15,7 +15,7 @@ const Header = () => {
                 {
                     userLoggedIn
                         ?
-                        <button onClick={() => { doSignOut().then(() => { navigate('/login') }) }} className='text-sm text-blue-600 underline'>
+                        <button className='header-link-login-container' onClick={() => { doSignOut().then(() => { navigate('/login') }) }}>
                             Logout
                         </button>
                         :
