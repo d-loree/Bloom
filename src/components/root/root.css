@@ -1,0 +1,120 @@
+div.background {
+    background: url("/public/office_person.png") repeat;
+    background-size: 100% 100%;
+    height: 750px;
+    /* border: 2px solid black; */
+  }
+  
+div.transbox {
+    margin: 30px;
+    background-color: #ff6600;
+    /* border: 1px solid black; */
+    opacity: 0.3;
+  }
+  
+p.title {
+    margin: 5%;
+    font-family: "Nunito", sans-serif;
+    font-size: 200%;
+    font-weight: 900;
+    color: #000000;
+  }
+
+
+  p.info {
+    margin: 5%;
+    font-family: "Nunito", sans-serif;
+    font-size: 100%;
+    font-weight: 900;
+    color: #000000;
+  }
+
+
+
+
+
+
+.section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 500px;
+    position: relative;
+}
+
+.circle-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    width: 100%;
+    padding: 50px;
+}
+
+.text-container {
+    max-width: 500px;
+    z-index: 2;
+}
+
+.text-container h4 {
+    color: #ff6600;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.text-container h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+}
+
+.text-container p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.text-container button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.text-container button:hover {
+    background-color: #0056b3;
+}
+
+.image-circle {
+    background: url("/public/office_person.png") repeat;
+    background-size: 100% 100%;
+    position: relative;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.image-circle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.grey-bg {
+    background-color: #f2f2f2;
+}
+
+@media screen and (max-width: 768px) {
+    .circle-container {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .text-container {
+        margin-bottom: 20px;
+    }
+}

@@ -4,6 +4,7 @@ import Register from "./components/auth/register/register";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
 
+import Root from "./components/root/root";
 import Inbox from "./components/inbox/inbox";
 import Profile from "./components/profile/profile";
 import Team from "./components/team/team";
@@ -15,7 +16,7 @@ function App() {
   const routesArray = [
     {
       path: "*",
-      element: <Login/>,
+      element: <Root/>,
     },
     {
       path: "/login",
