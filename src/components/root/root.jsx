@@ -6,27 +6,6 @@ import './root.css'
 
 
 const Root = () => {
-    const [authError, setAuthError] = useState(null);
-    const { currentUser } = useAuth();
-
-    useEffect(() => {
-        try {
-            // This checks if there's an issue with getting the current user
-            if (!currentUser) {
-                console.log("Unable to fetch user information. Please try reloading the page.");
-            }
-        } catch (error) {
-            console.error("Error checking authentication:", error);
-            setAuthError("An unexpected error occurred. Please try again later.");
-        }
-    }, [currentUser]);
-
-    // Display Home component if user is logged in
-    if (currentUser) {
-        return <Home />;
-    }
-
-
     return (
         <div>
             <div className="image-container">
