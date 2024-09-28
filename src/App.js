@@ -1,17 +1,17 @@
-import Login from "./components/auth/login";
-import Register from "./components/auth/register";
+import Login from "./components/auth/login/login";
+import Register from "./components/auth/register/register";
 
-import Header from "./components/header";
-import Home from "./components/home";
+import Header from "./components/header/header";
+import Home from "./components/home/home";
 
-import { AuthProvider } from "./contexts/authContext";
+import { AuthProvider } from "./contexts/authContext/authContext";
 import { useRoutes } from "react-router-dom";
 
 function App() {
   const routesArray = [
     {
       path: "*",
-      element: <Login />,
+      element: <Login/>,
     },
     {
       path: "/login",
