@@ -1,57 +1,93 @@
-import React, {useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/authContext/authContext';
-
 import { db } from '../../firebase/firebase';
-import { doc, getDoc} from "firebase/firestore";
-
-
+import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 
 const Inbox = () => {
-    const { currentUser } = useAuth();
-    const [showNotification, setShowNotification] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-  
-    useEffect(() => {
-      const checkReportsDoc = async () => {
-        try {
-          if (currentUser) {
-            // console.log(currentUser.uid);
-            const reportsDocRef = doc(db, "report_form_join", currentUser.uid);
-            const repDoc = await getDoc(reportsDocRef);
-            // console.log(repDoc.id);
+  const { currentUser } = useAuth();
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-            if (repDoc.id) {
-                const reportData = repDoc.data(); // Get document data
-                if (reportData.status === false) {
-                  setShowNotification(true);
+  useEffect(() => {
+    const fetchReportsAndEmails = async () => {
+      try {
+        if (currentUser) {
+          // Step 1: Get all reports linked to the current user with rstatus == false
+          const reportsQuery = query(
+            collection(db, "report_form_join"),
+            where("user", "==", currentUser.uid),
+            where("rstatus", "==", false)
+          );
+
+          const querySnapshot = await getDocs(reportsQuery);
+          const reportsList = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            reportId: doc.data().report, // Get the report ID from the report_form_join document
+          }));
+
+          // Step 2: Get the user_uid from the reports collection and then fetch the corresponding user email
+          const reportsWithEmails = await Promise.all(
+            reportsList.map(async (report) => {
+              // Get the report document from the "reports" collection
+              const reportDocRef = doc(db, "reports", report.reportId);
+              const reportDoc = await getDoc(reportDocRef);
+              
+              if (reportDoc.exists()) {
+                const userUid = reportDoc.data().user_uid;
+
+                // Step 3: Get the user email from the "users" collection using user_uid
+                const userDocRef = doc(db, "users", userUid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (userDoc.exists() && userUid !== currentUser.uid) {
+                  return { ...report, email: userDoc.data().email };
                 }
-            }
-          }
-        } catch (err) {
-          setError("Failed to fetch reports. Please try again later.");
-        } finally {
-          setLoading(false);
+              }
+
+              return { ...report, email: null };
+            })
+          );
+
+          // Filter out reports with null emails (in case the current user's email is not needed)
+          const filteredReports = reportsWithEmails.filter(report => report.email !== null);
+
+          setReports(filteredReports);
         }
-      };
-  
-      checkReportsDoc();
-    }, [currentUser]);
-  
-    if (loading) {
-      return <div>Loading...</div>;
-    }
-  
-    return (
-      <div>
-        {error && <div className="error">{error}</div>}
-        {showNotification && (
-          <div className="notification">
-            You have new reports to view!
-          </div>
-        )}
-      </div>
-    );
-  };
-  
-  export default Inbox;
+      } catch (err) {
+        console.error("Error fetching reports and emails:", err);
+        setError("Failed to fetch reports and emails. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchReportsAndEmails();
+  }, [currentUser]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div>
+      {error && <div className="error">{error}</div>}
+      {reports.length > 0 ? (
+        <div className="notification">
+          <h3>You have reports that need to be filled out by others:</h3>
+          <ul>
+            {reports.map((report) => (
+              <li key={report.id}>
+                Report ID: {report.reportId}, User Email: {report.email}
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <div>No reports need to be filled out by others.</div>
+      )}
+    </div>
+  );
+};
+
+export default Inbox;
