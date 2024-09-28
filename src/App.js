@@ -4,6 +4,10 @@ import Register from "./components/auth/register/register";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
 
+import Inbox from "./components/inbox/inbox";
+import Profile from "./components/profile/profile";
+import Team from "./components/team/team";
+
 import { AuthProvider } from "./contexts/authContext/authContext";
 import { useRoutes } from "react-router-dom";
 
@@ -24,6 +28,18 @@ function App() {
     {
       path: "/home",
       element: <Home />,
+    },
+    {
+      path: "/inbox",
+      element: <Inbox />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
+    },
+    {
+      path: "/team",
+      element: <Team />,
     },
   ];
   let routesElement = useRoutes(routesArray);
