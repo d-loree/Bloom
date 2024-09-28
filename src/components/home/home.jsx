@@ -45,7 +45,7 @@ const Home = () => {
         const teamDoc = await getDoc(teamDocRef);
         if (teamDoc.exists()) {
             await updateDoc(userDocRef, {
-                teams: arrayUnion(teamName)
+                teams: arrayUnion(teamCode)
             });
         window.location.reload();
         } else {
