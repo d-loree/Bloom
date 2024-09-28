@@ -31,11 +31,14 @@ export const requestFeedback = async (user) => {
             );
 
             const querySnapshot = await getDocs(usersQuery);
+            console.log(querySnapshot)
 
             // Process the results to get only uids
             const similarTeamUserUids = [];
             querySnapshot.forEach((doc) => {
-                similarTeamUserUids.push(doc.id); // Only push the user ID (uid)
+                if (doc.id !== user.uid) { // Exclude the current user
+                    similarTeamUserUids.push(doc.id); // Only push the user ID (uid)
+                }
             });
 
             console.log(similarTeamUserUids); // This will be an array of uids

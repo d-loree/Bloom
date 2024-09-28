@@ -1,3 +1,4 @@
+import { Navigate, useRoutes } from "react-router-dom";
 import Login from "./components/auth/login/login";
 import Register from "./components/auth/register/register";
 
@@ -11,13 +12,16 @@ import Profile from "./components/profile/profile";
 import Team from "./components/team/team";
 
 import { AuthProvider } from "./contexts/authContext/authContext";
-import { useRoutes } from "react-router-dom";
 
 function App() {
   const routesArray = [
     {
-      path: "*",
-      element: <Root/>,
+      path: "*", 
+      element: <Navigate to="/" />, // Redirect to root
+    },
+    {
+      path: "/",
+      element: <Root />,
     },
     {
       path: "/login",
@@ -48,7 +52,9 @@ function App() {
       element: <ViewFeedback />,
     },
   ];
+  
   let routesElement = useRoutes(routesArray);
+  
   return (
     <AuthProvider>
       <Header />

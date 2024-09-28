@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { useAuth } from '../../contexts/authContext/authContext'
 import Home from '../home/home';
@@ -9,9 +8,9 @@ const Root = () => {
     const { currentUser } = useAuth();
 
   // Check if user is logged in
-  if (currentUser) {
-    return <Home />;
-  }
+//   if (currentUser) {
+//     return <Home />;
+//   }
 
     return (
         <div>

@@ -5,12 +5,17 @@ import { db } from '../../firebase/firebase';
 import { doc, getDoc, collection, query, getDocs, setDoc ,arrayUnion, updateDoc } from 'firebase/firestore';
 import './home.css';
 import { requestFeedback } from '../../firebase/request_feedback';
+import Root from '../root/root';
 
 const Home = () => {
     const { currentUser } = useAuth();
     const [content , setContent] = useState(0);
     const [teamName , setTeamName] = useState(' ');
     const [teamCode , setTeamCode] = useState(' ');
+    // Check if user is not logged in
+    if (!currentUser) {
+        return <Root />;
+    }
     let userDocRef = doc(db, "users", currentUser.uid);
     let userDoc = null;
 
@@ -20,6 +25,9 @@ const Home = () => {
             setContent(userDoc.data().teams.length)
         }
     }
+
+
+
 
     noTeam()
     const createTeam = async () => {
