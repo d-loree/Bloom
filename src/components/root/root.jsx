@@ -4,6 +4,7 @@ import Home from '../home/home';
 import './root.css'
 
 
+
 const Root = () => {
     const { currentUser } = useAuth();
 
@@ -14,16 +15,14 @@ const Root = () => {
 
     return (
         <div>
-
-            <div class="background"> 
-                <div class="transbox">
-                    <p class="title">
-                        Build a culture where people BLOOM
-                    </p>
-                    <p class="info">
-                        Get the tools and insights you need to bloom a better version of yourself.
-                    </p>
-                </div>
+            <div className="image-container">
+                <img src= '/office_person.png' alr="office" className = "office-image"/>
+                <p class="title">
+                    Build a culture where people BLOOM
+                </p>
+                <p class="info">
+                    Get the tools and insights you need to bloom a better version of yourself.
+                </p>
             </div>
 
 

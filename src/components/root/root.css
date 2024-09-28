@@ -1,39 +1,32 @@
-div.background {
-    background: url("/public/office_person.png") repeat;
-    background-size: 100% 100%;
-    height: 750px;
-    /* border: 2px solid black; */
-  }
-  
-div.transbox {
-    margin: 30px;
-    background-color: #ff6600;
-    /* border: 1px solid black; */
-    opacity: 0.3;
-  }
-  
-p.title {
-    margin: 5%;
+
+
+.office-image{
+    width: 100vw;
+    height: 100vh;
+    z-index: -100;
+}
+.title,.info {
+    position: absolute;
     font-family: "Nunito", sans-serif;
-    font-size: 200%;
+    font-size: 40px;
     font-weight: 900;
     color: #000000;
-  }
+} 
+.title {
+    top: 0px;
+    left: 25vw;
+}
+
+.info{
+    top: 18vh;
+    left: 55vw;
+    width: 30%;
+}
 
 
-  p.info {
-    margin: 5%;
-    font-family: "Nunito", sans-serif;
-    font-size: 100%;
-    font-weight: 900;
-    color: #000000;
-  }
-
-
-
-
-
-
+.image-container{
+    display: inline-block;
+}
 .section {
     display: flex;
     justify-content: center;
