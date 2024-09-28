@@ -9,7 +9,7 @@ const Header = () => {
     const { userLoggedIn } = useAuth()
     return (
         <div className='header'>
-            <div className = 'header-logo'>BLOOM</div>
+            {userLoggedIn ? <Link to={'/home'} className = 'header-logo'> BLOOM </Link> : <Link to={'/'} className = 'header-logo'> BLOOM </Link> }
             <div className = 'header-right'>
                 <Link className = 'header-link-Profile' to={'/profile'}>Profile</Link>
                 {
