@@ -37,7 +37,7 @@ const Login = () => {
             <div className = "page-login-container">
                 <div>Sign In To Bloom</div>
 
-                <form onSubmit={onSubmit} className="sign_up">
+                <form onSubmit={onSubmit} className="sign_in">
                     <div className = 'page-login-inputs-container'>
                         <label> Email </label>
                         <input
