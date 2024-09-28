@@ -1,0 +1,47 @@
+/* team.css */
+
+/* Ensures the content is pushed down from the header */
+.team-container {
+    margin-top: 60px; /* Adjust this value based on the height of your header */
+    padding: 20px;
+    font-family: Arial, sans-serif; /* Use a readable font */
+    background-color: #f9f9f9; /* Light background for contrast */
+}
+
+/* Heading styles */
+.team-container h1 {
+    font-size: 2em;
+    color: #333; /* Darker color for better readability */
+    margin-bottom: 20px;
+}
+
+.team-container h2 {
+    font-size: 1.5em;
+    color: #555; /* Slightly lighter than the main header */
+    margin: 15px 0 10px;
+}
+
+/* List styles */
+.team-container ul {
+    list-style-type: none; /* Remove default list styles */
+    padding: 0; /* Remove default padding */
+}
+
+.team-container li {
+    background-color: #e1e1e1; /* Light gray background for list items */
+    border-radius: 5px; /* Rounded corners */
+    padding: 10px;
+    margin: 5px 0; /* Space between list items */
+    transition: background-color 0.3s; /* Smooth hover effect */
+}
+
+/* Hover effect for list items */
+.team-container li:hover {
+    background-color: #d1d1d1; /* Darker gray on hover */
+}
+
+/* Message for no teams */
+.no-teams-message {
+    font-size: 1.2em;
+    color: #777; /* Light gray for less emphasis */
+}
