@@ -22,6 +22,7 @@ const addUserToFirestore = async (user) => {
       displayName: user.displayName || null,
       createdAt: new Date(),
       organization: "Hack the Hill", // Default for now
+      teams: []
     });
 
     // Add user to the "Hack the Hill" organization document in Firestore
