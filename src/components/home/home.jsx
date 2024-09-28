@@ -24,6 +24,10 @@ const Home = () => {
                     <h3>Your Team</h3>
                     <button onClick={() => window.location.href = '/team'}>View Team</button>
                 </div>
+                <div className="card">
+                    <h3>View feedback</h3>
+                    <button onClick={() => window.location.href = '/view-feedback'}>View</button>
+                </div>
             </div>
         </div>
     );
