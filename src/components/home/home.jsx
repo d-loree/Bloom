@@ -7,11 +7,20 @@ import './home.css';
 
 const Home = () => {
     const { currentUser } = useAuth();
+    const [content , setContent] = useState(0);
     const [teamName , setTeamName] = useState(' ');
     const [teamCode , setTeamCode] = useState(' ');
     let userDocRef = doc(db, "users", currentUser.uid);
-    let userDoc = getDoc(userDocRef);
+    let userDoc = null;
 
+    const noTeam = async () => {
+        userDoc = await getDoc(userDocRef)
+        if (userDoc.data()) {
+            setContent(userDoc.data().teams.length)
+        }
+    }
+
+    noTeam()
     const createTeam = async () => {
         
         const teamDocRef = doc(db, "teams", teamName);
@@ -25,12 +34,22 @@ const Home = () => {
             await updateDoc(userDocRef, {
                 teams: arrayUnion(teamName)
             });
+        window.location.reload();
         } else {
             alert("Name already Exist")
         }
     }
     const joinTeam = async () => {
-
+        const teamDocRef = doc(db, "teams", teamName);
+        const teamDoc = await getDoc(teamDocRef);
+        if (teamDoc.exists()) {
+            await updateDoc(userDocRef, {
+                teams: arrayUnion(teamName)
+            });
+        window.location.reload();
+        } else {
+            alert("Team does not exist")
+        }
     }
 
     return (
@@ -52,7 +71,7 @@ const Home = () => {
                 <div className="card">
                     <h3>Your Team</h3>
                     {
-                        userDoc.teams 
+                        content > 0 
                             ? <Link className = "card-button" to={'/team'}>View Team</Link>
                             : 
                             <div className = "inputs-container">
