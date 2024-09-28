@@ -1,10 +1,13 @@
 import React from 'react'
 import { useAuth } from '../../contexts/authContext/authContext'
+import {getFirestore, doc, setDoc} from "firebase/firestore"
 
 const Team = () => {
     const { currentUser } = useAuth()
     return (
-        <div className='text-2xl font-bold pt-14'>Hello</div>
+        <div>
+            
+        </div>
     )
 }
 
