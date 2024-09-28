@@ -1,81 +1,97 @@
-import React, { useState } from 'react'
-import { Navigate, Link } from 'react-router-dom'
-import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../../firebase/auth'
-import { useAuth } from '../../../contexts/authContext/authContext'
-import './login.css'
+import React, { useState } from 'react';
+import { Navigate, Link } from 'react-router-dom';
+import { doSignInWithEmailAndPassword, doSignInWithGoogle } from '../../../firebase/auth';
+import { useAuth } from '../../../contexts/authContext/authContext';
+import './login.css';
 
 const Login = () => {
-    const { userLoggedIn } = useAuth()
+    const { userLoggedIn } = useAuth();
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
-    const [isSigningIn, setIsSigningIn] = useState(false)
-    const [errorMessage, setErrorMessage] = useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isSigningIn, setIsSigningIn] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
     const onSubmit = async (e) => {
-        e.preventDefault()
-        if(!isSigningIn) {
-            setIsSigningIn(true)
-            await doSignInWithEmailAndPassword(email, password)
-            // doSendEmailVerification()
-        }
-    }
-
-    const onGoogleSignIn = (e) => {
-        e.preventDefault()
+        e.preventDefault();
         if (!isSigningIn) {
-            setIsSigningIn(true)
-            doSignInWithGoogle().catch(err => {
-                setIsSigningIn(false)
-            })
+            setIsSigningIn(true);
+            setErrorMessage(''); // Clear any existing error message
+            try {
+                await doSignInWithEmailAndPassword(email, password);
+            } catch (error) {
+                setErrorMessage(error.message);
+                setIsSigningIn(false);
+            }
         }
-    }
+    };
+
+    const onGoogleSignIn = async (e) => {
+        e.preventDefault();
+        if (!isSigningIn) {
+            setIsSigningIn(true);
+            setErrorMessage(''); // Clear any existing error message
+            try {
+                await doSignInWithGoogle();
+            } catch (error) {
+                setErrorMessage(error.message);
+                setIsSigningIn(false);
+            }
+        }
+    };
 
     return (
-        <div className = "page-login">
-            {userLoggedIn && (<Navigate to={'/'} replace={true} />)}
-            <div className = "page-login-container">
+        <div className="page-login">
+            {userLoggedIn && <Navigate to={'/'} replace={true} />}
+            <div className="page-login-container">
                 <div>Sign In To Bloom</div>
 
                 <form onSubmit={onSubmit} className="sign_in">
-                    <div className = 'page-login-inputs-container'>
+                    <div className='page-login-inputs-container'>
                         <label> Email </label>
                         <input
-                            className = 'page-login-inputs'
+                            className='page-login-inputs'
                             type="email"
                             autoComplete='email'
                             required
-                            value={email} onChange={(e) => { setEmail(e.target.value) }}
+                            value={email}
+                            onChange={(e) => { setEmail(e.target.value); }}
                         />
                     </div>
 
-
-                    <div className = 'page-login-inputs-container'>
+                    <div className='page-login-inputs-container'>
                         <label> Password </label>
                         <input
-                            className = 'page-login-inputs'
+                            className='page-login-inputs'
                             type="password"
                             autoComplete='current-password'
                             required
-                            value={password} onChange={(e) => { setPassword(e.target.value) }}
+                            value={password}
+                            onChange={(e) => { setPassword(e.target.value); }}
                         />
                     </div>
 
-                    {errorMessage && (<span> {errorMessage} </span>)}
+                    {errorMessage && (
+                        <span className="error-message"> {errorMessage} </span>
+                    )}
 
                     <button type="submit" disabled={isSigningIn}>
                         {isSigningIn ? 'Signing In...' : 'Sign In'}
                     </button>
                 </form>
 
-                <p>Don't have a Bloom account? <Link to={'/register'} >Create yours now.</Link></p>
+                <p>Don't have a Bloom account? <Link to={'/register'}>Create yours now.</Link></p>
 
-                <button class = "button-google" disabled={isSigningIn} onClick={(e) => { onGoogleSignIn(e) }}>
+                <button
+                    className="button-google"
+                    disabled={isSigningIn}
+                    onClick={(e) => { onGoogleSignIn(e); }}
+                >
                     {isSigningIn ? 'Signing In...' : 'Continue with Google'}
                 </button>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

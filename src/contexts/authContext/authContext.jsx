@@ -1,6 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../../firebase/firebase";
-// import { GoogleAuthProvider } from "firebase/auth";
 import { onAuthStateChanged } from "firebase/auth";
 
 const AuthContext = React.createContext();
@@ -15,36 +14,50 @@ export function AuthProvider({ children }) {
   const [isEmailUser, setIsEmailUser] = useState(false);
   const [isGoogleUser, setIsGoogleUser] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [authError, setAuthError] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, initializeUser);
-    return unsubscribe;
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      try {
+        await initializeUser(user);
+      } catch (error) {
+        console.error("Error initializing user:", error);
+        setAuthError("Failed to initialize authentication. Please try again later.");
+      }
+    });
+
+    return () => {
+      try {
+        unsubscribe();
+      } catch (error) {
+        console.error("Error unsubscribing from auth state listener:", error);
+      }
+    };
   }, []);
 
   async function initializeUser(user) {
-    if (user) {
+    try {
+      if (user) {
+        setCurrentUser({ ...user });
 
-      setCurrentUser({ ...user });
+        // check if provider is email and password login
+        const isEmail = user.providerData.some(
+          (provider) => provider.providerId === "password"
+        );
+        setIsEmailUser(isEmail);
 
-      // check if provider is email and password login
-      const isEmail = user.providerData.some(
-        (provider) => provider.providerId === "password"
-      );
-      setIsEmailUser(isEmail);
-
-      // check if the auth provider is google or not
-    //   const isGoogle = user.providerData.some(
-    //     (provider) => provider.providerId === GoogleAuthProvider.PROVIDER_ID
-    //   );
-    //   setIsGoogleUser(isGoogle);
-
-      setUserLoggedIn(true);
-    } else {
-      setCurrentUser(null);
-      setUserLoggedIn(false);
+        // Set userLoggedIn to true
+        setUserLoggedIn(true);
+      } else {
+        setCurrentUser(null);
+        setUserLoggedIn(false);
+      }
+    } catch (error) {
+      console.error("Error during user initialization:", error);
+      setAuthError("An error occurred while processing user data. Please refresh the page.");
+    } finally {
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   const value = {
@@ -52,12 +65,19 @@ export function AuthProvider({ children }) {
     isEmailUser,
     isGoogleUser,
     currentUser,
-    setCurrentUser
+    setCurrentUser,
+    authError,
   };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
+      {authError ? (
+        <div className="error-message">{authError}</div>
+      ) : !loading ? (
+        children
+      ) : (
+        <div>Loading...</div>
+      )}
     </AuthContext.Provider>
   );
 }
