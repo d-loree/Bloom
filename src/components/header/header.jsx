@@ -2,26 +2,31 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/authContext/authContext'
 import { doSignOut } from '../../firebase/auth'
+import './header.css'
 
 const Header = () => {
     const navigate = useNavigate()
     const { userLoggedIn } = useAuth()
     return (
-        <nav className='flex flex-row gap-x-2 w-full z-20 fixed top-0 left-0 h-12 border-b place-content-center items-center bg-gray-200'>
-            {
-                userLoggedIn
-                    ?
-                    <>
-                        <button onClick={() => { doSignOut().then(() => { navigate('/login') }) }} className='text-sm text-blue-600 underline'>Logout</button>
-                    </>
-                    :
-                    <>
-                        <Link className='text-sm text-blue-600 underline' to={'/login'}>Login</Link>
-                        <Link className='text-sm text-blue-600 underline' to={'/register'}>Register New Account</Link>
-                    </>
-            }
+        <div className='header'>
+            <div className = 'header-logo'>BLOOM</div>
+            <div className = 'header-right'>
+                <Link className = 'header-link-Profile' to={'/profile'}>Profile</Link>
+                {
+                    userLoggedIn
+                        ?
+                        <button onClick={() => { doSignOut().then(() => { navigate('/login') }) }} className='text-sm text-blue-600 underline'>
+                            Logout
+                        </button>
+                        :
+                        <Link className='header-link-login-container' to={'/login'}>
+                                <span className='header-link-login'>Login</span>
+                        </Link>
 
-        </nav>
+                }
+            </div>
+
+        </div>
     )
 }
 
