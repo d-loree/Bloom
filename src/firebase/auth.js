@@ -1,5 +1,5 @@
 import { auth, db } from "./firebase";
-import {  doc, setDoc, getDoc, collection, addDoc } from "firebase/firestore"; 
+import { doc, setDoc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,17 +12,37 @@ import {
 
 // Add a new user to Firestore if they don't already exist
 const addUserToFirestore = async (user) => {
-  const userDocRef = doc(db, "users", user.uid); // Document reference for the user
+  const userDocRef = doc(db, "users", user.uid);
   const userDoc = await getDoc(userDocRef);
+
   if (!userDoc.exists()) {
     await setDoc(userDocRef, {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName || null,
       createdAt: new Date(),
+      organization: "Hack the Hill", // Default for now
     });
+
+    // Add user to the "Hack the Hill" organization document in Firestore
+    const organizationDocRef = doc(db, "organizations", "hack-the-hill");
+    const orgDoc = await getDoc(organizationDocRef);
+
+    if (orgDoc.exists()) {
+      // If the organization document exists, add the user's uid to the members list
+      await updateDoc(organizationDocRef, {
+        members: arrayUnion(user.uid)
+      });
+    } else {
+      // If the organization document does not exist, create it with the first member
+      await setDoc(organizationDocRef, {
+        name: "Hack the Hill",
+        members: [user.uid],
+        createdAt: new Date(),
+      });
+    }
   }
-}
+};
 
 export const doCreateUserWithEmailAndPassword = async (email, password) => {
   const result = await createUserWithEmailAndPassword(auth, email, password);
