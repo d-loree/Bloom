@@ -41,7 +41,7 @@ const Home = () => {
         }
     }
     const joinTeam = async () => {
-        const teamDocRef = doc(db, "teams", teamName);
+        const teamDocRef = doc(db, "teams", teamCode);
         const teamDoc = await getDoc(teamDocRef);
         if (teamDoc.exists()) {
             await updateDoc(userDocRef, {
