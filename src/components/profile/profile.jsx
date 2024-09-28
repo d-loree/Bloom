@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/authContext/authContext';
 import { Navigate } from 'react-router-dom';
+import { db } from '../../firebase/firebase'; // Import Firestore
+import { doc, updateDoc } from "firebase/firestore"; // Import updateDoc from Firestore
 import './profile.css';
 
 const Profile = () => {
-  const { currentUser } = useAuth();
+  const { currentUser, setCurrentUser } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
@@ -29,13 +31,27 @@ const Profile = () => {
     setError(null);
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (displayName.trim() === "") {
       setError("Display name cannot be empty.");
       return;
     }
-    // Logic to save updated profile details (not implemented)
-    setEditMode(false);
+
+    try {
+      // Update user's display name in Firestore
+      const userDocRef = doc(db, "users", currentUser.uid);
+      await updateDoc(userDocRef, {
+        displayName: displayName,
+      });
+
+      // Update the currentUser context after successful update
+      setCurrentUser({ ...currentUser, displayName: displayName });
+
+      setEditMode(false);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError("Failed to update profile. Please try again later.");
+    }
   };
 
   if (loading) {

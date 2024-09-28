@@ -15,17 +15,22 @@ const ViewFeedback = () => {
     const fetchFeedback = async () => {
       try {
         if (currentUser) {
-          // Step 1: Query the feedback collection for all feedback left for the current user
-          const feedbackQuery = query(
-            collection(db, "feedback_forms"),
-            where("reviewed_user", "==", currentUser.uid)
+          // Step 1: Query the "reports" collection to find reports linked to the current user
+          const reportsQuery = query(
+            collection(db, "reports"),
+            where("user_uid", "==", currentUser.uid)
           );
 
-          const querySnapshot = await getDocs(feedbackQuery);
-          const feedbackList = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data()
-          }));
+          const querySnapshot = await getDocs(reportsQuery);
+
+          // Extract feedback array from each report
+          const feedbackList = [];
+          querySnapshot.forEach((docSnapshot) => {
+            const reportData = docSnapshot.data();
+            if (reportData.feedback && Array.isArray(reportData.feedback)) {
+              feedbackList.push(...reportData.feedback);
+            }
+          });
 
           setFeedbackData(feedbackList);
         }
@@ -94,11 +99,9 @@ const ViewFeedback = () => {
                 <h4 className="text-lg font-semibold">Feedback {index + 1}</h4>
                 <ul className="mt-2">
                   {Object.entries(feedback).map(([question, response], i) => (
-                    question !== 'id' && question !== 'reviewed_user' && (
-                      <li key={i} className="text-gray-700">
-                        <strong>{question}:</strong> {response}
-                      </li>
-                    )
+                    <li key={i} className="text-gray-700">
+                      <strong>{question}:</strong> {response}
+                    </li>
                   ))}
                 </ul>
               </div>
