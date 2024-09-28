@@ -15,6 +15,7 @@ import Team from "./components/team/team";
 import { AuthProvider } from "./contexts/authContext/authContext";
 
 function App() {
+
   const routesArray = [
     {
       path: "*", 

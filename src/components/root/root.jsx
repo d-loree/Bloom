@@ -26,22 +26,15 @@ const Root = () => {
 
   return (
     <div>
-      {authError && (
-        <div className="error-message">
-          {authError}
+        <div className="image-container">
+            <img src= '/office_person.png' alr="office" className = "office-image"/>
+            <p class="title">
+                Build a culture where people BLOOM
+            </p>
+            <p class="info">
+                Get the tools and insights you need to bloom a better version of yourself.
+            </p>
         </div>
-      )}
-
-      <div className="background">
-        <div className="transbox">
-          <p className="title">
-            Build a culture where people BLOOM
-          </p>
-          <p className="info">
-            Get the tools and insights you need to bloom a better version of yourself.
-          </p>
-        </div>
-      </div>
 
       <div className="section">
         <div className="circle-container">
