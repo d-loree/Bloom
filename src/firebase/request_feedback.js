@@ -5,9 +5,9 @@ export const requestFeedback = async (user) => {
   try {
     // Step 1: Create the report in the db from the user's credentials
     const report = {
-      user_uid: user.uid,
-      created_at: new Date(),
-      feedback_array: [],
+        user_uid: user.uid,
+        created_at: new Date(),
+        feedback: []
     };
 
     // Step 2: Create and add a report to reports db, and get the document ID

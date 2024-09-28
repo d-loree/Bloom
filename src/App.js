@@ -5,6 +5,7 @@ import Register from "./components/auth/register/register";
 import Header from "./components/header/header";
 import Home from "./components/home/home";
 import ViewFeedback from "./components/view_feedback/view_feedback";
+import Form from "./components/form/form";
 
 import Root from "./components/root/root";
 import Inbox from "./components/inbox/inbox";
@@ -50,6 +51,10 @@ function App() {
     {
       path: "/view-feedback",
       element: <ViewFeedback />,
+    },
+    {
+      path: "/form",
+      element: <Form />,
     },
   ];
   

@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../contexts/authContext/authContext';
 import { db } from '../../firebase/firebase';
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { useNavigate } from 'react-router-dom';
 
 const Inbox = () => {
   const { currentUser } = useAuth();
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchReportsAndEmails = async () => {
@@ -88,8 +90,13 @@ const Inbox = () => {
           <h3>You have reports that need to be filled out by others:</h3>
           <ul>
             {reports.map((report) => (
-              <li key={report.id}>
-                Report ID: {report.reportId}, User Email: {report.email}
+              <li key={report.reportId}>
+                Report ID: {report.reportId}, User to give feedback to: {report.email}
+                <button
+                  key={report.reportId}
+                  onClick={() => navigate('/form', { state: { reportId: report.reportId } })}>
+                   Fill out form for {report.email}
+                </button>
               </li>
             ))}
           </ul>
