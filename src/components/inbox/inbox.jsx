@@ -12,27 +12,37 @@ const Inbox = () => {
   useEffect(() => {
     const fetchReportsAndEmails = async () => {
       try {
-        if (currentUser) {
-          // Step 1: Get all reports linked to the current user with rstatus == false
-          const reportsQuery = query(
-            collection(db, "report_form_join"),
-            where("user", "==", currentUser.uid),
-            where("rstatus", "==", false)
-          );
+        if (!currentUser) {
+          throw new Error("User is not authenticated.");
+        }
 
-          const querySnapshot = await getDocs(reportsQuery);
-          const reportsList = querySnapshot.docs.map((doc) => ({
-            id: doc.id,
-            reportId: doc.data().report, // Get the report ID from the report_form_join document
-          }));
+        // Step 1: Get all reports linked to the current user with rstatus == false
+        const reportsQuery = query(
+          collection(db, "report_form_join"),
+          where("user", "==", currentUser.uid),
+          where("rstatus", "==", false)
+        );
 
-          // Step 2: Get the user_uid from the reports collection and then fetch the corresponding user email
-          const reportsWithEmails = await Promise.all(
-            reportsList.map(async (report) => {
+        const querySnapshot = await getDocs(reportsQuery);
+        if (querySnapshot.empty) {
+          setReports([]);
+          setLoading(false);
+          return;
+        }
+
+        const reportsList = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          reportId: doc.data().report, // Get the report ID from the report_form_join document
+        }));
+
+        // Step 2: Get the user_uid from the reports collection and then fetch the corresponding user email
+        const reportsWithEmails = await Promise.all(
+          reportsList.map(async (report) => {
+            try {
               // Get the report document from the "reports" collection
               const reportDocRef = doc(db, "reports", report.reportId);
               const reportDoc = await getDoc(reportDocRef);
-              
+
               if (reportDoc.exists()) {
                 const userUid = reportDoc.data().user_uid;
 
@@ -44,16 +54,17 @@ const Inbox = () => {
                   return { ...report, email: userDoc.data().email };
                 }
               }
+            } catch (err) {
+              console.error(`Error fetching report or user details for report ID ${report.reportId}:`, err);
+            }
+            return { ...report, email: null };
+          })
+        );
 
-              return { ...report, email: null };
-            })
-          );
+        // Filter out reports with null emails (in case the current user's email is not needed)
+        const filteredReports = reportsWithEmails.filter(report => report.email !== null);
 
-          // Filter out reports with null emails (in case the current user's email is not needed)
-          const filteredReports = reportsWithEmails.filter(report => report.email !== null);
-
-          setReports(filteredReports);
-        }
+        setReports(filteredReports);
       } catch (err) {
         console.error("Error fetching reports and emails:", err);
         setError("Failed to fetch reports and emails. Please try again later.");
