@@ -3,6 +3,7 @@ import Register from "./components/auth/register/register";
 
 import Header from "./components/header/header";
 import Home from "./components/home/home";
+import ViewFeedback from "./components/view_feedback/view_feedback";
 
 import Root from "./components/root/root";
 import Inbox from "./components/inbox/inbox";
@@ -41,6 +42,10 @@ function App() {
     {
       path: "/team",
       element: <Team />,
+    },
+    {
+      path: "/view-feedback",
+      element: <ViewFeedback />,
     },
   ];
   let routesElement = useRoutes(routesArray);
