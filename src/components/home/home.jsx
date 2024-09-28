@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/authContext/authContext';
 import { db } from '../../firebase/firebase';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import './home.css';
+import { requestFeedback } from '../../firebase/request_feedback';
 
 const Home = () => {
     const { currentUser } = useAuth();
@@ -18,7 +19,7 @@ const Home = () => {
                 </div>
                 <div className="card">
                     <h3>Request Feedback</h3>
-                    <button>Request Feedback</button>
+                    <button onClick={() => requestFeedback(currentUser)}>Request Feedback</button>
                 </div>
                 <div className="card">
                     <h3>Your Team</h3>
