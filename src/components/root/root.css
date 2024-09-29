@@ -8,11 +8,11 @@
 }
 
 .bg-green-gr {
-    background: linear-gradient(180deg, rgba(220, 243, 218, 1) 0%, rgba(180, 215, 175, 1) 100%);
+    background: linear-gradient(0deg, rgb(193, 223, 188) 0%, rgba(235, 235, 235, 1) 50%, rgba(200, 200, 200, 1) 100%);
 }
 
 .bg-green-2 {
-    background: linear-gradient(180deg, rgba(220, 243, 218, 1) 0%, rgba(235, 235, 235, 1) 50%, rgba(200, 200, 200, 1) 100%);
+    background: linear-gradient(180deg, rgb(193, 223, 188) 0%, rgba(235, 235, 235, 1) 50%, rgba(200, 200, 200, 1) 100%);
 }
 
 .left-hero {
@@ -23,6 +23,7 @@
     box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.2);
     padding-bottom: 20px;
     margin-left: 60px;
+    border-radius: 15px;
 }
 
 .center-text {
