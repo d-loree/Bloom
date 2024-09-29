@@ -63,7 +63,7 @@ const FormPage = () => {
                 <form onSubmit={handleSubmit} className='centered'>
                     <div className='question'>
                         <label>How effectively do you think I communicate with the team during projects?:</label>
-                        <select value={q1} onChange={(e) => setQ1(e.target.value)} required>
+                        <select value={q1} onChange={(e) => setQ1(parseInt(e.target.value, 10))} required>
                             {[...Array(10)].map((_, i) => (
                                 <option key={i+1} value={i+1}>{i+1}</option>
                             ))}
@@ -71,7 +71,7 @@ const FormPage = () => {
                     </div>
                     <div className='question'>
                         <label>How would you rate my ability to meet project deadlines?:</label>
-                        <select value={q2} onChange={(e) => setQ2(e.target.value)} required>
+                        <select value={q2} onChange={(e) => setQ2(parseInt(e.target.value, 10))} required>
                             {[...Array(10)].map((_, i) => (
                                 <option key={i+1} value={i+1}>{i+1}</option>
                             ))}
@@ -79,7 +79,7 @@ const FormPage = () => {
                     </div>
                     <div className='question'>
                         <label>How well do I respond to constructive criticism?:</label>
-                        <select value={q3} onChange={(e) => setQ3(e.target.value)} required>
+                        <select value={q3} onChange={(e) => setQ3(parseInt(e.target.value, 10))} required>
                             {[...Array(10)].map((_, i) => (
                                 <option key={i+1} value={i+1}>{i+1}</option>
                             ))}
