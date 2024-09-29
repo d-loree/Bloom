@@ -6,6 +6,7 @@ import { doc, getDoc, setDoc, updateDoc, arrayUnion } from 'firebase/firestore';
 import './home.css';
 import { requestFeedback } from '../../firebase/request_feedback';
 import Root from '../root/root';
+import { motion } from 'framer-motion'
 
 const Home = () => {
   const { currentUser } = useAuth();
@@ -91,42 +92,64 @@ const Home = () => {
 
   return (
     <div className="dashboard-container">
-      <h2>Welcome, {currentUser?.displayName || currentUser?.email}!</h2>
-      {error && <div className="error-message">{error}</div>}
-      <div className="card-container">
-        <div className="card">
-          <h3>Inbox</h3>
-          <p>You have X pending feedback forms to fill out.</p>
-          <Link className="card-button" to={'/inbox'}>View Team</Link>
-        </div>
+      <motion.h2
+        initial = {{ y: -300}}
+        animate = {{ y: 0}}
+        transition={{type: 'tween' , stiffness: 5}}
+      > Welcome, {currentUser?.displayName || currentUser?.email}! </motion.h2 >
+      <div class = "home-nav">
+        {error && <div className="error-message">{error}</div>}
+        <div className="card-container">
+          <motion.div className="card"
+            initial = {{ x: -200}}
+            animate = {{ x: 0}}
+            transition={{type: 'tween' , stiffness: 1}}
+          >
+            <h3>Inbox</h3>
+            <p>You have X pending feedback forms to fill out.</p>
+            <Link className="card-button" to={'/inbox'}>View Team</Link>
+          </motion.div>
 
-        <div className="card">
-          <h3>Request Feedback</h3>
-          <button onClick={() => requestFeedback(currentUser)}>Request Feedback</button>
-        </div>
+          <motion.div className="card"
+            initial = {{ y: 200}}
+            animate = {{ y: 0}}
+            transition={{type: 'tween' , stiffness: 7050}}
+          >
+            <h3>Request Feedback</h3>
+            <button onClick={() => requestFeedback(currentUser)}>Request Feedback</button>
+          </motion.div>
 
-        <div className="card">
-          <h3>Your Team</h3>
-          {
-            content > 0
-              ? <Link className="card-button" to={'/team'}>View Team</Link>
-              : 
-              <div className="inputs-container">
-                <div className="input-set">
-                  <input className="inputs" onChange={(e) => { setTeamName(e.target.value) }} />
-                  <button onClick={createTeam}>Create</button>
+          <motion.div className="card"
+            initial = {{ y: 200}}
+            animate = {{ y: 0}}
+            transition={{type: 'tween' , stiffness: 5}}
+          >
+            <h3>Your Team</h3>
+            {
+              content > 0
+                ? <Link className="card-button" to={'/team'}>View Team</Link>
+                : 
+                <div className="inputs-container">
+                  <div className="input-set">
+                    <input className="inputs" onChange={(e) => { setTeamName(e.target.value) }} />
+                    <button onClick={createTeam}>Create</button>
+                  </div>
+                  <div className="input-set">
+                    <input className="inputs" onChange={(e) => { setTeamCode(e.target.value) }} />
+                    <button onClick={joinTeam}>Join</button>
+                  </div>
                 </div>
-                <div className="input-set">
-                  <input className="inputs" onChange={(e) => { setTeamCode(e.target.value) }} />
-                  <button onClick={joinTeam}>Join</button>
-                </div>
-              </div>
-          }
-        </div>
+            }
+          </motion.div>
 
-        <div className="card">
-          <h3>View feedback</h3>
-          <Link className="card-button" to={'/view-feedback'}>View</Link>
+          <motion.div className="card"
+            initial = {{ x: 200}}
+            animate = {{ x: 0}}
+            transition={{type: 'tween' , stiffness: 5}}
+          >
+            <h3>View feedback</h3>
+            <Link className="card-button" to={'/view-feedback'}>View</Link>
+          </motion.div>
         </div>
       </div>
     </div>
