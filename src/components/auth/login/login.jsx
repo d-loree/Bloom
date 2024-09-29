@@ -44,7 +44,7 @@ const Login = () => {
         <div className="page-login">
             {userLoggedIn && <Navigate to={'/'} replace={true} />}
             <div className="page-login-container">
-                <div>Sign In To Bloom</div>
+                <div>Sign In</div>
 
                 <form onSubmit={onSubmit} className="sign_in">
                     <div className='page-login-inputs-container'>
@@ -80,8 +80,6 @@ const Login = () => {
                     </button>
                 </form>
 
-                <p>Don't have a Bloom account? <Link to={'/register'}>Create yours now.</Link></p>
-
                 <button
                     className="button-google"
                     disabled={isSigningIn}
@@ -89,6 +87,10 @@ const Login = () => {
                 >
                     {isSigningIn ? 'Signing In...' : 'Continue with Google'}
                 </button>
+
+                <div className="create-account-button">
+                    <Link to={'/register'}>Create account</Link>
+                </div>
             </div>
         </div>
     );

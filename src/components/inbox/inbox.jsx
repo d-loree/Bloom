@@ -3,6 +3,7 @@ import { useAuth } from '../../contexts/authContext/authContext';
 import { db } from '../../firebase/firebase';
 import { collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import './inbox.css';
 
 const Inbox = () => {
   const { currentUser } = useAuth();
@@ -78,32 +79,29 @@ const Inbox = () => {
     fetchReportsAndEmails();
   }, [currentUser]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div>
-      {error && <div className="error">{error}</div>}
-      {reports.length > 0 ? (
-        <div className="notification">
-          <h3>You have reports that need to be filled out by others:</h3>
-          <ul>
-            {reports.map((report) => (
-              <li key={report.reportId}>
-                Report ID: {report.reportId}, User to give feedback to: {report.email}
-                <button
-                  key={report.reportId}
-                  onClick={() => navigate('/form', { state: { reportId: report.reportId } })}>
-                   Fill out form for {report.email}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : (
-        <div>No reports need to be filled out by others.</div>
-      )}
+    <div className='page-wrapper'>
+      <div className='content-container'>
+        {error && <div className="error">{error}</div>}
+        {reports.length > 0 ? (
+          <div className="notification centered">
+            <h3>You have reports that need to be filled out</h3>
+            <ul className='centered p-0'>
+              {reports.map((report) => (
+                <li key={report.reportId} className='centered'>
+                  <button
+                    key={report.reportId}
+                    onClick={() => navigate('/form', { state: { reportId: report.reportId } })} className='btn-lg'>
+                    Fill out form for {report.email}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : (
+          <div>You have requested documents</div>
+        )}
+      </div>
     </div>
   );
 };

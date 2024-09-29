@@ -29,22 +29,24 @@ const Team = () => {
     }
 
     return (
-        <div className="team-container">
-            <h1>Your Team(s)</h1>
-            {Object.keys(teamData).length === 0 ? (
-                <p className="no-teams-message">No teams available.</p>
-            ) : (
-                Object.entries(teamData).map(([teamName, emails]) => (
-                    <div key={teamName}>
-                        <h2>{teamName}</h2>
-                        <ul>
-                            {emails.map((email) => (
-                                <li key={email}>{email}</li>
-                            ))}
-                        </ul>
-                    </div>
-                ))
-            )}
+        <div class="page-wrapper">
+            <div className="team-container">
+                <h1>Your Team(s)</h1>
+                {Object.keys(teamData).length === 0 ? (
+                    <p className="no-teams-message">No teams available.</p>
+                ) : (
+                    Object.entries(teamData).map(([teamName, emails]) => (
+                        <div key={teamName}>
+                            <h2>{teamName}</h2>
+                            <ul>
+                                {emails.map((email) => (
+                                    <li key={email}>{email}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    ))
+                )}
+            </div>
         </div>
     );
 }

@@ -4,6 +4,7 @@ import { db } from '../../firebase/firebase';
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { Bar } from 'react-chartjs-2';
 import 'chart.js/auto';
+import './view_feedback.css'
 
 const ViewFeedback = () => {
   const { currentUser } = useAuth();
@@ -15,7 +16,7 @@ const ViewFeedback = () => {
     const fetchFeedback = async () => {
       try {
         if (currentUser) {
-          // Step 1: Query the "reports" collection to find reports linked to the current user
+          // Query the "reports" collection to find reports linked to the current user
           const reportsQuery = query(
             collection(db, "reports"),
             where("user_uid", "==", currentUser.uid)
@@ -45,13 +46,18 @@ const ViewFeedback = () => {
     fetchFeedback();
   }, [currentUser]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   if (error) {
     return <div className="error">{error}</div>;
   }
+
+  // Convert Firestore Timestamp to readable date string
+  const formatValue = (value) => {
+    if (value?.seconds && value?.nanoseconds) {
+      const date = new Date(value.seconds * 1000);
+      return date.toLocaleString(); // You can customize this format
+    }
+    return value;
+  };
 
   // Extract data for charts
   const chartData = {};
@@ -87,20 +93,21 @@ const ViewFeedback = () => {
   };
 
   return (
-    <div className="p-10">
-      <h2 className="text-2xl font-bold pt-14">Feedback Forum</h2>
-      
-      <div className="mt-8">
-        <h3 className="text-xl font-semibold">Feedback Responses:</h3>
-        <div className="mt-4">
+    <div className="page-wrapper">
+      <div class="content-container idk">
+
+        <h2>Feedback Forum</h2>
+
+        <h3>Feedback Responses:</h3>
+        <div>
           {feedbackData.length > 0 ? (
             feedbackData.map((feedback, index) => (
-              <div key={index} className="border p-4 mb-4 rounded shadow">
-                <h4 className="text-lg font-semibold">Feedback {index + 1}</h4>
-                <ul className="mt-2">
+              <div key={index}>
+                <h4>Feedback {index + 1}</h4>
+                <ul>
                   {Object.entries(feedback).map(([question, response], i) => (
-                    <li key={i} className="text-gray-700">
-                      <strong>{question}:</strong> {response}
+                    <li key={i}>
+                      <strong>{question}:</strong> {typeof response === 'object' ? formatValue(response) : response}
                     </li>
                   ))}
                 </ul>
@@ -110,31 +117,30 @@ const ViewFeedback = () => {
             <div>No feedback available.</div>
           )}
         </div>
-      </div>
 
-      <div className="mt-10">
-        <h3 className="text-xl font-semibold">Close-Ended Questions Evaluation:</h3>
-        <div className="mt-4">
-          {chartDatasets.length > 0 ? (
-            <Bar
-              data={barChartData}
-              options={{
-                responsive: true,
-                plugins: {
-                  legend: {
-                    position: 'top',
+        <div className="centered">
+          <h3>Close-Ended Questions Evaluation:</h3>
+            {chartDatasets.length > 0 ? (
+              <Bar
+                data={barChartData}
+                options={{
+                  responsive: true,
+                  plugins: {
+                    legend: {
+                      position: 'top',
+                    },
+                    title: {
+                      display: true,
+                      text: 'Average Evaluation of Close-Ended Questions',
+                    },
                   },
-                  title: {
-                    display: true,
-                    text: 'Average Evaluation of Close-Ended Questions',
-                  },
-                },
-              }}
-            />
-          ) : (
-            <div>No data available for charts.</div>
-          )}
+                }}
+              />
+            ) : (
+              <div>No data available for charts.</div>
+            )}
         </div>
+
       </div>
     </div>
   );

@@ -59,6 +59,7 @@ export const requestFeedback = async (user) => {
                 // Step 8: Add the entry to the 'report_form_join' collection
                 const reportFormJoinRef = doc(collection(db, "report_form_join"));
                 await setDoc(reportFormJoinRef, reportFormJoinEntry);
+                alert("Feedback request sent successfully!");
               } catch (error) {
                 console.error(`Error adding entry to report_form_join for user ${similarUserUid}:`, error);
               }
@@ -70,6 +71,7 @@ export const requestFeedback = async (user) => {
             throw new Error("Failed to query users with common teams. Please try again later.");
           }
         } else {
+          alert("You have to join a team first");
           console.log("User is not part of any team.");
         }
       } else {
