@@ -42,9 +42,9 @@ const Root = () => {
           <img className='plant-img' src="people_working.png"/>
         </div>
       
-        <div className='right-hero center-text text-dropshadow'>
-          <h1 className='title'>Develop Skills</h1>
-          <p className='caption'>Get constructive feedback to work on the weak areas you may not know about</p>
+        <div className='padding-text right-hero center-text text-dropshadow'>
+          <h1 className='title'>Enhance</h1>
+          <p className='caption'>Receive valuable feedback to address hidden areas for improvement</p>
         </div>
       </div>
     </>
