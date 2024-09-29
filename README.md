@@ -9,3 +9,9 @@ Bloom was developed during the *Hack the Hill* hackathon in Ottawa, where the th
 - Anthony Lin
 - Youssuf Hichri
 - Will Wisasanka
+
+## Pictures
+![image](https://github.com/user-attachments/assets/03df0ccf-c302-49d0-b972-f943c8a1afee)
+![image](https://github.com/user-attachments/assets/267b778c-9039-48da-afb4-cc6d36686e5a)
+
+
