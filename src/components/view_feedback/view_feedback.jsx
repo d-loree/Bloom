@@ -51,29 +51,37 @@ const ViewFeedback = () => {
   }
 
   // Extract data for charts
-  const chartData = {};
+  const questionKeys = [
+    "How effectively do you think I communicate with the team during projects?",
+    "How would you rate my ability to meet project deadlines?",
+    "How well do I respond to constructive criticism?",
+  ];
+
+  const chartData = {
+    "Question 1": [],
+    "Question 2": [],
+    "Question 3": []
+  };
+
   feedbackData.forEach((feedback) => {
-    for (let key in feedback) {
-      if (typeof feedback[key] === 'number') { // Assuming close-ended questions have numeric values
-        if (!chartData[key]) {
-          chartData[key] = [];
-        }
-        chartData[key].push(feedback[key]);
+    questionKeys.forEach((key, index) => {
+      if (typeof feedback[key] === 'number') {
+        chartData[`Question ${index + 1}`].push(feedback[key]);
       }
-    }
+    });
   });
 
   // Prepare data for the chart
   const chartDatasets = Object.keys(chartData).map((question, index) => {
     const data = chartData[question];
     const totalValue = data.reduce((acc, value) => acc + value, 0);
-    const averageValue = (totalValue / data.length) * 10; // Scale the average value out of 10
+    const averageValue = data.length > 0 ? totalValue / data.length : 0; // Calculate the average
 
     return {
       label: question,
       data: [averageValue],
-      backgroundColor: `rgba(${75 + index * 20}, 192, 192, 0.6)`,
-      borderColor: `rgba(${75 + index * 20}, 192, 192, 1)`,
+      backgroundColor: `rgba(${75 + index * 50}, 192, 192, 0.6)`,
+      borderColor: `rgba(${75 + index * 50}, 192, 192, 1)`,
       borderWidth: 2,
       borderRadius: 10, // Rounded corners
     };
@@ -113,16 +121,6 @@ const ViewFeedback = () => {
           bottom: 20,
         },
       },
-      datalabels: {
-        anchor: 'end',
-        align: 'top',
-        color: '#333',
-        font: {
-          size: 12,
-          weight: 'bold',
-        },
-        formatter: (value) => value.toFixed(2),
-      },
     },
     scales: {
       y: {
@@ -157,7 +155,7 @@ const ViewFeedback = () => {
 
   return (
     <div className="page-wrapper">
-      <div className="content-container idk">
+      <div className="content-container">
 
         <h2>Feedback Forum</h2>
 
@@ -165,7 +163,7 @@ const ViewFeedback = () => {
         <div>
           {feedbackData.length > 0 ? (
             feedbackData.map((feedback, index) => (
-              <div key={index}>
+              <div key={index} className="feedback-card">
                 <h4>Feedback {index + 1}</h4>
                 <ul>
                   {Object.entries(feedback)

@@ -1,3 +1,4 @@
+/* General Styling */
 .page-wrapper {
   padding: 20px;
   max-width: 1200px;
@@ -19,6 +20,14 @@
   margin-top: 20px;
 }
 
+.feedback-card {
+  background-color: #f9fafb;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0
+}
+
 .centered {
   text-align: center;
 }
@@ -31,3 +40,4 @@
   border-radius: 8px;
   background-color: #f8d7da;
 }
+
