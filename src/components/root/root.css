@@ -1,113 +1,53 @@
-
-
-.office-image{
-    width: 100vw;
-    height: 100vh;
-    z-index: -100;
-}
-.title,.info {
-    position: absolute;
-    font-family: "Nunito", sans-serif;
-    font-size: 40px;
-    font-weight: 900;
-    color: #000000;
-} 
-.title {
-    top: 0px;
-    left: 25vw;
-}
-
-.info{
-    top: 18vh;
-    left: 55vw;
-    width: 30%;
-}
-
-
-.image-container{
-    display: inline-block;
-}
-.section {
+.hero-container {
+    padding-top: 60px;
+    padding-bottom: 60px;
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+    justify-content: space-evenly;
     align-items: center;
-    min-height: 500px;
-    position: relative;
 }
 
-.circle-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 1200px;
-    width: 100%;
-    padding: 50px;
+.bg-green-gr {
+    background: linear-gradient(0deg, rgb(193, 223, 188) 0%, rgba(235, 235, 235, 1) 50%, rgba(200, 200, 200, 1) 100%);
 }
 
-.text-container {
-    max-width: 500px;
-    z-index: 2;
+.bg-green-2 {
+    background: linear-gradient(180deg, rgb(193, 223, 188) 0%, rgba(235, 235, 235, 1) 50%, rgba(200, 200, 200, 1) 100%);
 }
 
-.text-container h4 {
-    color: #ff6600;
-    font-weight: bold;
-    margin-bottom: 10px;
+.left-hero {
+    width: 25%; 
 }
 
-.text-container h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+.text-dropshadow {
+    box-shadow: 1px 1px 18px rgba(0, 0, 0, 0.2);
+    padding-bottom: 20px;
+    margin-left: 60px;
+    border-radius: 15px;
 }
 
-.text-container p {
-    font-size: 1.1em;
-    line-height: 1.6;
-    margin-bottom: 20px;
+.center-text {
+    text-align: center;
 }
 
-.text-container button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1em;
-    border-radius: 5px;
-    cursor: pointer;
+.right-hero {
+    width: 25%;
 }
 
-.text-container button:hover {
-    background-color: #0056b3;
-}
-
-.image-circle {
-    background: url("/public/officegroup.png") repeat;
-    background-size: 100% 100%;
-    position: relative;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    overflow: hidden;
-    flex-shrink: 0;
-}
-
-.image-circle img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.grey-bg {
-    background-color: #f2f2f2;
-}
-
-@media screen and (max-width: 768px) {
-    .circle-container {
-        flex-direction: column;
-        text-align: center;
-    }
+.plant-img {
+    width: 500px;
     
-    .text-container {
-        margin-bottom: 20px;
-    }
+}
+
+.title {
+    font-size: 60px;
+    
+}
+
+.caption {
+    font-size: 18px;
+}
+
+.padding-text {
+    padding: 20px;
 }

@@ -25,46 +25,31 @@ const Root = () => {
   }
 
   return (
-    <div>
-        <div className="image-container">
-            <img src= '/office_person.png' alr="office" className = "office-image"/>
-            <p class="title">
-                Build a culture where people BLOOM
-            </p>
-            <p class="info">
-                Get the tools and insights you need to bloom a better version of yourself.
-            </p>
+    <>
+      <div className='hero-container bg-green-gr'>
+        <div className='left-hero text-dropshadow center-text'>
+          <h1 className='title'>Bloom</h1>
+          <p className='caption'>Build a culture where people <i>grow</i></p>
         </div>
-
-      <div className="section">
-        <div className="circle-container">
-          <div className="text-container">
-            <h4>EMPLOYEE ENGAGEMENT MATTERS</h4>
-            <h2>Grow. Retain. Recruit.</h2>
-            <p>
-              Organizations with high employee engagement scores are 21% higher probability
-              than those who are low. They're also better able to retain and recruit top talent.
-            </p>
-            {/* <button>Learn More</button> */}
-          </div>
-          <div className="image-circle"></div>
+      
+        <div className='right-hero'>
+          <img className='plant-img' src="main_plant.png"/>
         </div>
       </div>
 
-      <div className="section grey-bg">
-        <div className="circle-container">
-          <div className="image-circle"></div>
-          <div className="text-container">
-            <h2>Get the formula for success.</h2>
-            <p>
-              Our software helps organizations work out employee feedback so that HR leaders
-              are empowered to bring positive organizational change and improve employee engagement.
-            </p>
-            {/* <button>Learn How</button> */}
-          </div>
+      <div className='hero-container bg-green-2'>
+        <div className='left-hero'>
+          <img className='plant-img' src="people_working.png"/>
+        </div>
+      
+        <div className='padding-text right-hero center-text text-dropshadow'>
+          <h1 className='title'>Enhance</h1>
+          <p className='caption'>Receive valuable feedback to address hidden areas for improvement</p>
         </div>
       </div>
-    </div>
+    </>
+
+
   );
 };
 

@@ -94,7 +94,7 @@ const ViewFeedback = () => {
 
   return (
     <div className="page-wrapper">
-      <div class="content-container idk">
+      <div className="content-container idk">
 
         <h2>Feedback Forum</h2>
 
@@ -105,10 +105,12 @@ const ViewFeedback = () => {
               <div key={index}>
                 <h4>Feedback {index + 1}</h4>
                 <ul>
-                  {Object.entries(feedback).map(([question, response], i) => (
-                    <li key={i}>
-                      <strong>{question}:</strong> {typeof response === 'object' ? formatValue(response) : response}
-                    </li>
+                  {Object.entries(feedback)
+                    .filter(([question]) => question !== 'submittedAt') // Filter out the date field
+                    .map(([question, response], i) => (
+                      <li key={i}>
+                        <strong>{question}:</strong> {typeof response === 'object' ? formatValue(response) : response}
+                      </li>
                   ))}
                 </ul>
               </div>
@@ -120,25 +122,25 @@ const ViewFeedback = () => {
 
         <div className="centered">
           <h3>Close-Ended Questions Evaluation:</h3>
-            {chartDatasets.length > 0 ? (
-              <Bar
-                data={barChartData}
-                options={{
-                  responsive: true,
-                  plugins: {
-                    legend: {
-                      position: 'top',
-                    },
-                    title: {
-                      display: true,
-                      text: 'Average Evaluation of Close-Ended Questions',
-                    },
+          {chartDatasets.length > 0 ? (
+            <Bar
+              data={barChartData}
+              options={{
+                responsive: true,
+                plugins: {
+                  legend: {
+                    position: 'top',
                   },
-                }}
-              />
-            ) : (
-              <div>No data available for charts.</div>
-            )}
+                  title: {
+                    display: true,
+                    text: 'Average Evaluation of Close-Ended Questions',
+                  },
+                },
+              }}
+            />
+          ) : (
+            <div>No data available for charts.</div>
+          )}
         </div>
 
       </div>

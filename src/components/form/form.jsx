@@ -28,11 +28,11 @@ const FormPage = () => {
             // Update the feedback array by adding the new feedback as JSON
             await updateDoc(reportRef, {
                 feedback: arrayUnion({
-                    q1: q1,
-                    q2: q2,
-                    q3: q3,
-                    q4: q4,
-                    q5: q5,
+                    "How effectively do you think I communicate with the team during projects?": q1,
+                    "How would you rate my ability to meet project deadlines?": q2,
+                    "How well do I respond to constructive criticism?": q3,
+                    "Suggest one professional skill I should develop or improve": q4,
+                    "Looking at our team's goals, in what ways do you think I can contribute more effectively?": q5,
                     submittedAt: new Date(),
                 })
             });
