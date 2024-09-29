@@ -64,9 +64,9 @@ const Profile = () => {
 
   return (
     <div className="profile-container">
-      <h2 className="profile-header">Profile Page</h2>
       {error && <div className="profile-error">{error}</div>}
       <div className="profile-card">
+        <h3 className="profile-header">Profile Page</h3>
         <div className="profile-info">
           <label className="profile-label">Display Name:</label>
           {editMode ? (

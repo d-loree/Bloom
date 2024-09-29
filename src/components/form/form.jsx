@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { db } from '../../firebase/firebase';
 import { query, where, collection, getDocs, updateDoc, doc, arrayUnion } from 'firebase/firestore';
+import './form.css';
 
 const FormPage = () => {
     const { state } = useLocation();
@@ -55,55 +56,57 @@ const FormPage = () => {
     };
 
     return (
-        <div>
-            <h2>Submit Feedback</h2>
-            {error && <div className="error">{error}</div>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Q1 (Rate from 1 to 10):</label>
-                    <select value={q1} onChange={(e) => setQ1(e.target.value)} required>
-                        {[...Array(10)].map((_, i) => (
-                            <option key={i+1} value={i+1}>{i+1}</option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label>Q2 (Rate from 1 to 10):</label>
-                    <select value={q2} onChange={(e) => setQ2(e.target.value)} required>
-                        {[...Array(10)].map((_, i) => (
-                            <option key={i+1} value={i+1}>{i+1}</option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label>Q3 (Rate from 1 to 10):</label>
-                    <select value={q3} onChange={(e) => setQ3(e.target.value)} required>
-                        {[...Array(10)].map((_, i) => (
-                            <option key={i+1} value={i+1}>{i+1}</option>
-                        ))}
-                    </select>
-                </div>
+        <div className='page-wrapper'>
+            <div className='content-container'>
+            <h2>Submit Anonymous Feedback</h2>
+                {error && <div className="error">{error}</div>}
+                <form onSubmit={handleSubmit} className='centered'>
+                    <div className='question'>
+                        <label>How effectively do you think I communicate with the team during projects?:</label>
+                        <select value={q1} onChange={(e) => setQ1(e.target.value)} required>
+                            {[...Array(10)].map((_, i) => (
+                                <option key={i+1} value={i+1}>{i+1}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='question'>
+                        <label>How would you rate my ability to meet project deadlines?:</label>
+                        <select value={q2} onChange={(e) => setQ2(e.target.value)} required>
+                            {[...Array(10)].map((_, i) => (
+                                <option key={i+1} value={i+1}>{i+1}</option>
+                            ))}
+                        </select>
+                    </div>
+                    <div className='question'>
+                        <label>How well do I respond to constructive criticism?:</label>
+                        <select value={q3} onChange={(e) => setQ3(e.target.value)} required>
+                            {[...Array(10)].map((_, i) => (
+                                <option key={i+1} value={i+1}>{i+1}</option>
+                            ))}
+                        </select>
+                    </div>
 
-                <div>
-                    <label>Q4 (Your feedback):</label>
-                    <textarea
-                        value={q4}
-                        onChange={(e) => setQ4(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Q5 (Additional comments):</label>
-                    <textarea
-                        value={q5}
-                        onChange={(e) => setQ5(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit" disabled={loading}>
-                    {loading ? 'Submitting...' : 'Submit Feedback'}
-                </button>
-            </form>
+                    <div className='question'>
+                        <label>Suggest one professional skill I should develop or improve:</label> <br/>
+                        <textarea
+                            value={q4}
+                            onChange={(e) => setQ4(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <div className='question'>
+                        <label>Looking at our team's goals, in what ways do you think I can contribute more effectively?:</label> <br/>
+                        <textarea
+                            value={q5}
+                            onChange={(e) => setQ5(e.target.value)}
+                            required
+                        />
+                    </div>
+                    <button type="submit" disabled={loading} className='btn-lg'>
+                        {loading ? 'Submitting...' : 'Submit Feedback'}
+                    </button>
+                </form>
+            </div>
         </div>
     );
 };

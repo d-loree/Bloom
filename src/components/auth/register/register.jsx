@@ -97,7 +97,7 @@ const Register = () => {
             {isRegistering ? 'Signing Up...' : 'Sign Up'}
           </button>
 
-          <p> Already have an account? <Link to={'/login'}> Continue </Link> </p>
+          <div class="continue-button"><Link to={'/login'}> Continue </Link></div>
         </form>
       </div>
     </div>
