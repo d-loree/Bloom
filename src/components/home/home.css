@@ -1,6 +1,15 @@
 .dashboard-container {
-    padding: 20px;
+    font-family: "Nunito", sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
     text-align: center;
+}
+.home-nav{
+    padding-bottom:200px;
 }
 
 .card-container {
@@ -34,9 +43,6 @@
 }
 .card-button {
     padding: 10px 20px;
-    font-family: "Nunito", sans-serif;
-    font-weight: 900;
-    font-size: 20px;
     text-decoration: none;
     background-color: #007bff;
     color: white;

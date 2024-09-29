@@ -9,6 +9,7 @@
     "autoprefixer": "^10.4.16",
     "chart.js": "^4.4.4",
     "firebase": "^10.7.1",
+    "framer-motion": "^11.9.0",
     "postcss": "^8.4.33",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
